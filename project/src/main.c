@@ -11,20 +11,21 @@
 
 int main(int argc, char *argv[])
 {
-  srand(100);
-  double parametro_chegada;
-  printf("Informe o tempo médio entre as chegadas (s): ");
-  scanf("%lf", &parametro_chegada);
+  if (argc != 5)
+  {
+    printf("Usage: %s seed parametro_chega parametro_saida tempo_simulacao\n", argv[0]);
+    return EXIT_FAILURE;
+  }
+
+  unsigned int seed = atoi(argv[1]);
+  double parametro_chegada = atof(argv[2]);
+  double parametro_saida = atof(argv[3]);
+  double tempo_simulacao = atof(argv[4]);
+
+  srand(seed);
+
   parametro_chegada = 1.0 / parametro_chegada;
-
-  double parametro_saida;
-  printf("Informe o tempo médio de atendimento (s): ");
-  scanf("%lf", &parametro_saida);
   parametro_saida = 1.0 / parametro_saida;
-
-  double tempo_simulacao;
-  printf("Informe o tempo de simulacao (s): ");
-  scanf("%lf", &tempo_simulacao);
 
   double tempo_decorrido = 0.0;
 
@@ -41,9 +42,12 @@ int main(int argc, char *argv[])
   little ew_chegadas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
   little ew_saidas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
 
+  // metrics
   double en_final = 0.0;
   double ew_final = 0.0;
   double lambda = 0.0;
+  double little_error = 0.0;
+  double ocupacao = 0.0;
 
   double tempo_calc = 100.0;
 
@@ -51,7 +55,7 @@ int main(int argc, char *argv[])
   if (file == NULL)
   {
     printf("Error opening file!\n");
-    return 0;
+    return EXIT_FAILURE;
   }
   fprintf(file, "Time,Fila Max,Ocupacao,E[N],E[W],Lambda,Erro de Little\n");
 
@@ -104,28 +108,42 @@ int main(int argc, char *argv[])
       en_final = en.soma_areas / tempo_decorrido;
       ew_final = (ew_chegadas.soma_areas - ew_saidas.soma_areas) / ew_chegadas.num_eventos;
       lambda = ew_chegadas.num_eventos / tempo_decorrido;
+      ocupacao = soma_ocupacao / tempo_decorrido;
+      little_error = en_final - (lambda * ew_final);
 
       // Escrever no arquivo CSV
       fprintf(file, "%f,%lu,%f,%f,%f,%f,%f\n",
-              tempo_decorrido, fila_max, soma_ocupacao / tempo_decorrido, en_final, ew_final, lambda, en_final - lambda * ew_final);
+              tempo_decorrido, fila_max, ocupacao, en_final, ew_final, lambda, little_error);
 
       // Atualizar o próximo tempo para calcular métricas
       tempo_calc += 100.0;
     }
   }
-
-  printf("\nMaior tamanho de fila alcancado: %ld\n", fila_max);
-  printf("Ocupacao: %lf\n", soma_ocupacao / tempo_decorrido);
+  fclose(file);
+  littles_calc(&ew_chegadas, tempo_decorrido);
+  littles_calc(&ew_saidas, tempo_decorrido);
 
   en_final = en.soma_areas / tempo_decorrido;
   ew_final = (ew_chegadas.soma_areas - ew_saidas.soma_areas) / ew_chegadas.num_eventos;
   lambda = ew_chegadas.num_eventos / tempo_decorrido;
+  ocupacao = soma_ocupacao / tempo_decorrido;
+  little_error = en_final - (lambda * ew_final);
 
+  printf("\nMaior tamanho de fila alcancado: %ld\n", fila_max);
+  printf("Ocupacao: %lf\n", ocupacao);
   printf("E[N]: %lf\n", en_final);
   printf("E[W]: %lf\n", ew_final);
-  printf("Erro de Little: %lf\n", en_final - lambda * ew_final);
+  printf("Erro de Little: %lf\n", little_error);
 
-  fclose(file);
+  // RENAME FILE
+  int file_ocup = (int)(ocupacao * 100);
+  char new_name[50];
+  sprintf(new_name, "./data/output%d.csv", file_ocup);
 
-  return 0;
+  if (rename(CSV_PATH, new_name) != 0)
+  {
+    perror("Error renaming file");
+  }
+
+  return EXIT_SUCCESS;
 }
