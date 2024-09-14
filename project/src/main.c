@@ -4,45 +4,12 @@
 #include <time.h>
 #include <float.h>
 
-typedef struct
-{
-  unsigned long int num_eventos;
-  double tempo_anterior;
-  double soma_areas;
-} little;
+#include "metrics.h"
+#include "little.h"
 
-double uniforme()
-{
-  double u = rand() / ((double)RAND_MAX + 1);
-  // u == 0 --> ln(u) <-- problema
-  // limitando u entre (0,1]
-  u = 1.0 - u;
-  return u;
-}
+#define CSV_PATH "./data/output.csv"
 
-double gera_tempo(double l)
-{
-  return (-1.0 / l) * log(uniforme());
-}
-
-double min(double n1, double n2, double n3)
-{
-  if (n1 < n2 && n1 < n3)
-    return n1;
-  else if (n2 < n3)
-    return n2;
-  else
-    return n3;
-}
-
-void inicia_little(little *n)
-{
-  n->num_eventos = 0;
-  n->soma_areas = 0.0;
-  n->tempo_anterior = 0.0;
-}
-
-int main()
+int main(int argc, char *argv[])
 {
   srand(100);
   double parametro_chegada;
@@ -69,16 +36,10 @@ int main()
 
   double soma_ocupacao = 0.0;
 
-  /**
-   * variaveis little
-   */
-
-  little en;
-  little ew_chegadas;
-  little ew_saidas;
-  inicia_little(&en);
-  inicia_little(&ew_chegadas);
-  inicia_little(&ew_saidas);
+  // little's variables
+  little en = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
+  little ew_chegadas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
+  little ew_saidas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
 
   double en_final = 0.0;
   double ew_final = 0.0;
@@ -86,19 +47,17 @@ int main()
 
   double tempo_calc = 100.0;
 
-  FILE *file = fopen("output.csv", "a");
+  FILE *file = fopen(CSV_PATH, "a");
   if (file == NULL)
   {
     printf("Error opening file!\n");
     return 0;
   }
-
-  // Write the CSV header
   fprintf(file, "Time,Fila Max,Ocupacao,E[N],E[W],Lambda,Erro de Little\n");
 
   while (tempo_decorrido <= tempo_simulacao)
   {
-    tempo_decorrido = min(tempo_chegada, tempo_saida, tempo_calc);
+    tempo_decorrido = min(min(tempo_chegada, tempo_saida), tempo_calc);
 
     if (tempo_decorrido == tempo_chegada)
     {
@@ -112,16 +71,11 @@ int main()
 
       tempo_chegada = tempo_decorrido + gera_tempo(parametro_chegada);
 
-      /**
-       * little
-       */
-      en.soma_areas += (tempo_decorrido - en.tempo_anterior) * en.num_eventos;
+      // little
+      littles_calc(&en, tempo_decorrido);
+      littles_calc(&ew_chegadas, tempo_decorrido);
       en.num_eventos++;
-      en.tempo_anterior = tempo_decorrido;
-
-      ew_chegadas.soma_areas += (tempo_decorrido - ew_chegadas.tempo_anterior) * ew_chegadas.num_eventos;
       ew_chegadas.num_eventos++;
-      ew_chegadas.tempo_anterior = tempo_decorrido;
     }
     else if (tempo_decorrido == tempo_saida)
     {
@@ -133,19 +87,19 @@ int main()
         soma_ocupacao += tempo_saida - tempo_decorrido;
       }
 
-      /**
-       * little
-       */
-      en.soma_areas += (tempo_decorrido - en.tempo_anterior) * en.num_eventos;
+      // little
+      littles_calc(&en, tempo_decorrido);
+      littles_calc(&ew_saidas, tempo_decorrido);
       en.num_eventos--;
-      en.tempo_anterior = tempo_decorrido;
-
-      ew_saidas.soma_areas += (tempo_decorrido - ew_saidas.tempo_anterior) * ew_saidas.num_eventos;
       ew_saidas.num_eventos++;
-      ew_saidas.tempo_anterior = tempo_decorrido;
     }
+    // Calculate pontual little's metrics
     else if (tempo_decorrido == tempo_calc)
     {
+
+      littles_calc(&en, tempo_decorrido);
+      littles_calc(&ew_chegadas, tempo_decorrido);
+      littles_calc(&ew_saidas, tempo_decorrido);
 
       en_final = en.soma_areas / tempo_decorrido;
       ew_final = (ew_chegadas.soma_areas - ew_saidas.soma_areas) / ew_chegadas.num_eventos;
@@ -160,11 +114,9 @@ int main()
     }
   }
 
-  ew_chegadas.soma_areas += (tempo_decorrido - ew_chegadas.tempo_anterior) * ew_chegadas.num_eventos;
-  ew_saidas.soma_areas += (tempo_decorrido - ew_saidas.tempo_anterior) * ew_saidas.num_eventos;
-
-  printf("Maior tamanho de fila alcancado: %d\n", fila_max);
+  printf("\nMaior tamanho de fila alcancado: %ld\n", fila_max);
   printf("Ocupacao: %lf\n", soma_ocupacao / tempo_decorrido);
+
   en_final = en.soma_areas / tempo_decorrido;
   ew_final = (ew_chegadas.soma_areas - ew_saidas.soma_areas) / ew_chegadas.num_eventos;
   lambda = ew_chegadas.num_eventos / tempo_decorrido;
@@ -174,5 +126,6 @@ int main()
   printf("Erro de Little: %lf\n", en_final - lambda * ew_final);
 
   fclose(file);
+
   return 0;
 }

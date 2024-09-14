@@ -85,9 +85,10 @@ int main()
     // chegada
     if (tempo_decorrido == tempo_chegada)
     {
-      // sistema esta ocioso?
+      // sistema esta ocioso? 0 pessoas na fila
       if (!fila)
       {
+        // gera tempo de saida do atual
         tempo_saida = tempo_decorrido + gera_tempo(parametro_saida);
 
         soma_ocupacao += tempo_saida - tempo_decorrido;
@@ -95,6 +96,7 @@ int main()
       fila++;
       fila_max = fila > fila_max ? fila : fila_max;
 
+      // gera tempo de chegada do proximo
       tempo_chegada = tempo_decorrido + gera_tempo(parametro_chegada);
 
       /**
@@ -112,7 +114,7 @@ int main()
     {
       fila--;
       tempo_saida = DBL_MAX;
-      // tem mais requisicoes na fila?
+      // tem mais requisicoes na fila? fila != 0
       if (fila)
       {
         tempo_saida = tempo_decorrido + gera_tempo(parametro_saida);
