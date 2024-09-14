@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
   double soma_ocupacao = 0.0;
 
-  // little's variables
+  // iniciar variaveis de little
   little en = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
   little ew_chegadas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
   little ew_saidas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
@@ -49,8 +49,10 @@ int main(int argc, char *argv[])
   double little_error = 0.0;
   double ocupacao = 0.0;
 
+  // Tempo inicial de calculo
   double tempo_calc = 100.0;
 
+  // Criar arquivo csv
   FILE *file = fopen(CSV_PATH, "a");
   if (file == NULL)
   {
@@ -135,7 +137,7 @@ int main(int argc, char *argv[])
   printf("E[W]: %lf\n", ew_final);
   printf("Erro de Little: %lf\n", little_error);
 
-  // RENAME FILE
+  // Adicionar ocupacao ao nome do arquivo csv
   int file_ocup = (int)(ocupacao * 100);
   char new_name[50];
   sprintf(new_name, "./data/output%d.csv", file_ocup);
