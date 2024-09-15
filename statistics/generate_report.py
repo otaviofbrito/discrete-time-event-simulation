@@ -28,11 +28,11 @@ def load_csv():
 def render_to_html(figs):
     # Convert figures to HTML
     plotly_jinja_data = {
-        "fig1": figs[0].to_html(full_html=False),
-        "fig2": figs[1].to_html(full_html=False),
-        "fig3": figs[2].to_html(full_html=False),
-        "fig3": figs[3].to_html(full_html=False),
-        "fig3": figs[4].to_html(full_html=False)
+        "fig1": figs[0].to_html(full_html=False, include_plotlyjs='cdn'),
+        "fig2": figs[1].to_html(full_html=False, include_plotlyjs='cdn'),
+        "fig3": figs[2].to_html(full_html=False, include_plotlyjs='cdn'),
+        "fig4": figs[3].to_html(full_html=False, include_plotlyjs='cdn'),
+        "fig5": figs[4].to_html(full_html=False, include_plotlyjs='cdn')
     }
 
     # Render template with multiple plots
