@@ -3,25 +3,148 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Discrete Time Event Simulation</title>
+    <title>Simulação por Eventos Discretos</title>
     <link rel="stylesheet" href="./style/report.css" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
   </head>
   <body>
     <div class="container">
       <header>
-        <h1>Discrete Time Event Simulation</h1>
-        <p class="subtitle">Subtítulo do Artigo</p>
+        <h1>Simulação via Eventos Discretos</h1>
+        <p class="subtitle">Discrete Time Event Simulation</p>
       </header>
+      <article>
+        <p>
+          Os elementos chave em uma simulação por eventos discretos são
+          variáveis e eventos. Para executar a simulação, é necessário manter o
+          controle de certas variáveis. No geral, existem três tipos de
+          variáveis que devemos manipular:
+        </p>
+        <ul>
+          <li>
+            <strong>Variável de tempo:</strong> representa a quantidade de tempo
+            simulado que passou.
+          </li>
+          <li>
+            <strong>Variável de contagem:</strong> mantém a contagem de quantas
+            vezes um determinado evento ocorreu até o tempo <em>t</em>.
+          </li>
+          <li>
+            <strong>Variável de estado do sistema:</strong> descreve o estado do
+            sistema em um instante de tempo <em>t</em>.
+          </li>
+        </ul>
+        <p>
+          Durante a simulação, os eventos ocorrem em pontos específicos no
+          tempo, e cada evento pode alterar o estado do sistema ou influenciar
+          outras variáveis. O objetivo de uma simulação de eventos discretos é
+          coletar informações e métricas do sistema, como tempo médio de espera,
+          utilização do sistema, número médio de elementos no sistema, entre
+          outros.
+        </p>
+        <p>
+          Em modelos de fila, consideramos que os clientes chegam de acordo com
+          um processo  de <b>Poisson</b> não-homogêneo, com uma função de intensidade
+          λ(t), t > 0. Na simulação desse modelo, utilizamos a seguinte função
+          para a geração dos tempos:
+        </p>
+        <p>$$\frac{-1}{\lambda} \cdot ln(U)$$</p>
+        <p>onde <i><b>U</b></i> é uma variável aleatória uniforme.</p>
+      </article>
+      <hr class="stylized-line">
+      <div>
+        <h2>Medidas de Desempenho</h1>
+        <p>
+          Foram realizadas simulações cujos parâmetros estão descritos na
+          legenda de cada gráfico <b>(E: Taxa média de entrada, S: Taxa média de saída)</b>. Em
+          seguida, são calculadas diferentes medidas de desempenho para
+          comprovar a consistência do sistema.
+        </p>
+      </div>
 
-      <div class="plot">{{ fig1|safe }}</div>
-      <div class="plot">{{ fig2|safe }}</div>
-      <div class="plot">{{ fig3|safe }}</div>
-      <div class="plot">{{ fig4|safe }}</div>
-      <div class="plot">{{ fig5|safe }}</div>
+      <div class="plot">
+        <h3>Número máximo de elementos na fila</h3>
+        <p>
+          Este gráfico mostra o número máximo de elementos na fila durante a
+          simulação. O número de elementos pode variar dependendo da taxa de
+          chegada de novos elementos e da capacidade do sistema de processá-los.
+        </p>
+        {{ fig1|safe }}
+      </div>
+
+      <div class="plot">
+        <h3>Utilização</h3>
+        <p>
+          A utilização mede a fração do tempo em que o sistema permanece
+          ocupado, em relação ao tempo total da simulação. Uma utilização
+          próxima a 1 indica que o sistema está constantemente ocupado, enquanto
+          uma utilização mais baixa sugere que há períodos ociosos.
+        </p>
+        {{ fig2|safe }}
+      </div>
+
+      <div class="plot">
+        <h3>
+          Média de elementos no sistema (E[N]) & Tempo médio de espera (E[W])
+        </h3>
+        <p>
+          A média de elementos no sistema reflete quantos itens, em média, estão
+          presentes no sistema a qualquer instante de tempo. Já o tempo médio de
+          espera representa o tempo que um elemento passa na fila antes de ser
+          processado.
+        </p>
+        <p>Fórmulas utilizadas:</p>
+        <p>$$E[N] = \frac{\text{Soma da área sob o gráfico}}{\text{tempo decorrido}}$$</p>
+        <p>
+          $$E[W] = \frac{\text{Número de chegadas no tempo t - Número de saídas no tempo t}}
+           {\text{Número de elementos que entraram no sistema}}$$
+        </p>
+        {{ fig3|safe }}
+      </div>
+
+      <div class="plot">
+        <h3>Taxa de chegada de elementos no sistema - Lambda (λ)</h3>
+        <p>
+          A taxa de chegada, ou Lambda (λ), representa o número de novos
+          elementos que chegam ao sistema por unidade de tempo. Este valor é
+          fundamental para calcular outras métricas, como a utilização e o
+          número de elementos no sistema.
+        </p>
+        {{ fig4|safe }}
+      </div>
+
+      <div class="plot">
+        <h3>Erro de Little</h3>
+        <p>
+          O Erro de Little verifica a validade da fórmula de Little, que
+          estabelece uma relação entre o número médio de itens no sistema, o
+          tempo médio de espera e a taxa de chegada de itens. Um erro muito alto
+          pode indicar inconsistências na simulação. Para garantir consistência,
+          o erro de Little deve ser próximo de 0.
+        </p>
+        <p>Lei de Little: $$E[N] = \lambda \cdot E[W]$$</p>
+        <p>Erro de Little: $$E = \lambda \cdot E[W] - E[N]$$</p>
+        {{ fig5|safe }}
+      </div>
+
+      <div>
+        <h3>Referências</h3>
+        <ol>
+          <li><p>ROSS, S. M., <em>Simulation</em>. 4ª ed. San Diego: Academic Press, 2006.</p></li>
+        </ol>
+      </div>
+
+      <hr class="stylized-line">
 
       <footer>
         <p>&copy; 2024 Otávio Brito.</p>
+        <a href="https://github.com/otaviofbrito/discrete-time-event-simulation">Github</a>
       </footer>
     </div>
   </body>

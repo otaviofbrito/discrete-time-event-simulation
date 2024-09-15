@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import os
 
-output_html_path = r"../report.html"
+output_html_path = r"../index.html"
 input_template_path = r"./template.html"
 csv_path = r"../c_project/data/"
 
@@ -46,23 +46,48 @@ def main():
     df = load_csv()
     figs = []
 
-    fig = px.line(df, x='Time', y="Ocupacao",
-                  color='Fonte', title='Utilização (Ocupação)')
-    figs.append(fig)
-
     fig = fig = px.line(df, x='Time', y="Fila Max",
                         color='Fonte', title='Máximo de Fila')
+    fig.update_layout(
+        xaxis_title='Tempo',
+        yaxis_title='Fila Máxima',
+        legend_title='Parâmetros'
+    )
+    figs.append(fig)
+
+    fig = px.line(df, x='Time', y="Ocupacao",
+                  color='Fonte', title='Utilização (Ocupação)')
+    fig.update_layout(
+        xaxis_title='Tempo',
+        yaxis_title='Ocupação',
+        legend_title='Parâmetros'
+    )
     figs.append(fig)
 
     fig = fig = px.line(df, x='Time', y=[
-                        "E[N]", "E[W]"], color='Fonte', title='Média de elementos no sistema')
+                        "E[N]", "E[W]"], color='Fonte', title='E[N] e E[W]')
+    fig.update_layout(
+        xaxis_title='Tempo',
+        yaxis_title='E[N] & E[W]',
+        legend_title='Parâmetros'
+    )
     figs.append(fig)
 
     fig = px.line(df, x='Time', y="Lambda", color='Fonte')
+    fig.update_layout(
+        xaxis_title='Tempo',
+        yaxis_title='Lambda',
+        legend_title='Parâmetros'
+    )
     figs.append(fig)
 
     fig = px.line(df, x='Time', y="Erro de Little",
-                  color='Fonte', title='Erro de little')
+                  color='Fonte', title='Erro de Little')
+    fig.update_layout(
+        xaxis_title='Tempo',
+        yaxis_title='Erro',
+        legend_title='Parâmetros'
+    )
     figs.append(fig)
 
     render_to_html(figs)

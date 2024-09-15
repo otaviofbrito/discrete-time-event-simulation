@@ -22,7 +22,7 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 3rem;
 }
 
 header h1 {
@@ -43,7 +43,15 @@ article {
 
 footer {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 4rem;
   font-size: 0.9em;
   color: #777777;
+}
+
+.stylized-line {
+  border: none;
+  height: 1px;
+  background-color: #9b9ea085; /* Cor da linha */
+  margin: 2rem 0; /* Espaçamento acima e abaixo da linha */
+  border-radius: 5px; /* Bordas arredondadas */
 }
