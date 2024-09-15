@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
   double parametro_saida = atof(argv[3]);
   double tempo_simulacao = atof(argv[4]);
 
+  const double param1 = parametro_chegada;
+  const double param2 = parametro_saida;
+
   srand(seed);
 
   parametro_chegada = 1.0 / parametro_chegada;
@@ -59,7 +62,7 @@ int main(int argc, char *argv[])
     printf("Error opening file!\n");
     return EXIT_FAILURE;
   }
-  fprintf(file, "Time,Fila Max,Ocupacao,E[N],E[W],Lambda,Erro de Little\n");
+  fprintf(file, "Time,Fila Max,Ocupacao,E[N],E[W],Lambda,Erro de Little,Chegada,Saida\n");
 
   while (tempo_decorrido <= tempo_simulacao)
   {
@@ -114,8 +117,8 @@ int main(int argc, char *argv[])
       little_error = en_final - (lambda * ew_final);
 
       // Escrever no arquivo CSV
-      fprintf(file, "%f,%lu,%f,%f,%f,%f,%f\n",
-              tempo_decorrido, fila_max, ocupacao, en_final, ew_final, lambda, little_error);
+      fprintf(file, "%f,%lu,%f,%f,%f,%f,%f,%f,%f\n",
+              tempo_decorrido, fila_max, ocupacao, en_final, ew_final, lambda, little_error, param1, param2);
 
       // Atualizar o próximo tempo para calcular métricas
       tempo_calc += 100.0;
