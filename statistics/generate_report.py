@@ -6,25 +6,33 @@ import os
 
 output_html_path = r"../report.html"
 input_template_path = r"./template.html"
+csv_path = r"../c_project/data/"
 
 
 def load_csv():
-    pass
+    arquivos_csv = [f for f in os.listdir(csv_path) if f.endswith('.csv')]
+    dataframes = []
+    for arquivo in arquivos_csv:
+        caminho_arquivo = os.path.join(csv_path, arquivo)
+        df = pd.read_csv(caminho_arquivo)
+        if not df.empty:
+            number = arquivo.split('output')[-1].split('.')[0]
+            params = f"(E:{df.iloc[0]['Chegada']}, S:{df.iloc[0]['Saida']})"
+            df['Fonte'] = f'{number}% - {params}'
+        dataframes.append(df)
 
-def main():
-    # Create multiple figures
-    fig1 = px.bar(px.data.gapminder().query("country == 'Canada'"),
-                  x='year', y='pop', title="Population of Canada")
-    fig2 = px.scatter(px.data.gapminder().query("country == 'United States'"),
-                      x='year', y='gdpPercap', title="GDP Per Capita of United States")
-    fig3 = px.line(px.data.gapminder().query("country == 'China'"),
-                   x='year', y='lifeExp', title="Life Expectancy in China")
+    df_combined = pd.concat(dataframes, ignore_index=True)
+    return df_combined
 
+
+def render_to_html(figs):
     # Convert figures to HTML
     plotly_jinja_data = {
-        "fig1": fig1.to_html(full_html=False),
-        "fig2": fig2.to_html(full_html=False),
-        "fig3": fig3.to_html(full_html=False)
+        "fig1": figs[0].to_html(full_html=False),
+        "fig2": figs[1].to_html(full_html=False),
+        "fig3": figs[2].to_html(full_html=False),
+        "fig3": figs[3].to_html(full_html=False),
+        "fig3": figs[4].to_html(full_html=False)
     }
 
     # Render template with multiple plots
@@ -32,6 +40,32 @@ def main():
         with open(input_template_path) as template_file:
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render(plotly_jinja_data))
+
+
+def main():
+    df = load_csv()
+    figs = []
+
+    fig = px.line(df, x='Time', y="Ocupacao",
+                  color='Fonte', title='Utilização (Ocupação)')
+    figs.append(fig)
+
+    fig = fig = px.line(df, x='Time', y="Fila Max",
+                        color='Fonte', title='Máximo de Fila')
+    figs.append(fig)
+
+    fig = fig = px.line(df, x='Time', y=[
+                        "E[N]", "E[W]"], color='Fonte', title='Média de elementos no sistema')
+    figs.append(fig)
+
+    fig = px.line(df, x='Time', y="Lambda", color='Fonte')
+    figs.append(fig)
+
+    fig = px.line(df, x='Time', y="Erro de Little",
+                  color='Fonte', title='Erro de little')
+    figs.append(fig)
+
+    render_to_html(figs)
 
     return
 
