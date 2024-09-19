@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
       ew_saidas.num_eventos++;
     }
     // Calculate pontual little's metrics
-    else if (tempo_decorrido == tempo_calc)
+    else
     {
 
       littles_calc(&en, tempo_decorrido);
