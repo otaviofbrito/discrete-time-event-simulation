@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   // metrics
   double en_final = 0.0;
   double ew_final = 0.0;
-  double lambda = 0.0;
+  double lambda = 0.0;  
   double little_error = 0.0;
   double ocupacao = 0.0;
 
@@ -102,8 +102,8 @@ int main(int argc, char *argv[])
       en.num_eventos--;
       ew_saidas.num_eventos++;
     }
-    // Calculate pontual little's metrics
-    else if (tempo_decorrido == tempo_calc)
+    // Calcula métricas
+    else
     {
 
       littles_calc(&en, tempo_decorrido);
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
   printf("Erro de Little: %lf\n", little_error);
 
   // Adicionar ocupacao ao nome do arquivo csv
-  int file_ocup = (int)(ocupacao * 100);
+  int file_ocup = (int)(round(ocupacao * 100));
   char new_name[50];
   sprintf(new_name, "./data/output%d.csv", file_ocup);
 

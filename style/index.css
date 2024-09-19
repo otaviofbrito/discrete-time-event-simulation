@@ -54,3 +54,12 @@ footer {
   background-color: #9b9ea085; /* Cor da linha */
   margin: 2rem 0; /* Espaçamento acima e abaixo da linha */
 }
+
+div .calc {
+  justify-content: center;
+  display: flex;
+}
+
+div .input {
+  display: flex;
+}
