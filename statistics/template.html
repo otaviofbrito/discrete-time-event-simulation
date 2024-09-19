@@ -55,49 +55,7 @@
           para a geração dos tempos:
         </p>
         <p>$$\frac{-1}{\lambda} \cdot ln(U)$$</p>
-        <p>onde <i><b>U</b></i> é uma variável aleatória uniforme.</p>
-        <hr class="stylized-line">
-        <h2>Cálculo da Ocupação</h2>
-        <div class="calc">
-          <div class="left">
-            <div class="input">
-              <label for="entrada">Taxa de Entrada (λ):</label>
-              <input type="number" id="entrada" placeholder="λ" min="0" step="0.1"><br><br>
-            </div>
-            
-            <div class="input">
-              <label for="atendimento">Taxa de Atendimento (μ):</label>
-              <input type="number" id="atendimento" placeholder="μ" min="0" step="0.1"><br><br>
-            </div>
-            
-            <div class="input">
-              <button onclick="calcularOcupacao()">Calcular</button>
-            </div>
-
-          </div>
-
-          
-          <p id="resultado"></p>
-          <script>
-                function calcularOcupacao() {
-                // Obtendo os valores dos inputs
-                const taxaEntrada = parseFloat(document.getElementById("entrada").value);
-                const taxaAtendimento = parseFloat(document.getElementById("atendimento").value);
-                // Verificando se todos os valores foram inseridos
-                if (isNaN(taxaEntrada) || isNaN(taxaAtendimento)) {
-                    document.getElementById("resultado").innerText = "Insira valores válidos em todos os campos.";
-                    return;
-                }
-              
-                // Calculando a ocupação (taxa de atendimento / taxa de entrada)
-                const ocupacaoCalculada = (taxaAtendimento / taxaEntrada).toFixed(2);
-              
-                // Exibindo o resultado na página
-                document.getElementById("resultado").innerText = ` = ${ocupacaoCalculada}%`;
-              }
-          </script>
-
-        </div>
+        <p>onde <i><b>U</b></i> é uma variável aleatória uniforme.</p>       
 
       </article>
       <hr class="stylized-line">
@@ -112,7 +70,63 @@
       </div>
 
       <div class="plot">
-        <h3>Número máximo de elementos na fila</h3>
+        <h3>1. Utilização (Ocupação)</h3>
+        <p>
+          A utilização mede a fração do tempo em que o sistema permanece
+          ocupado, em relação ao tempo total da simulação. Uma utilização
+          próxima a 1 indica que o sistema está constantemente ocupado, enquanto
+          uma utilização mais baixa sugere que há períodos ociosos.
+        </p>
+        <div class="calc">
+          <h3>Cálculo da Utilização</h2>
+          <div class="conta">
+            <div class="left">
+              <div class="input">
+                <label for="entrada">Taxa de Entrada (λ):</label>
+                <input type="number" id="entrada" placeholder="λ" min="0" step="0.1"><br><br>
+              </div> 
+              <div>
+                <hr>
+                <div class="input">
+                  <label for="atendimento">Taxa de Atendimento (μ):</label>
+                  <input type="number" id="atendimento" placeholder="μ" min="0" step="0.1"><br><br>
+                </div>
+              </div>
+
+            </div>
+            <div class="right">
+              <p id="resultado"></p>
+            </div>
+            
+          </div>
+
+          <button onclick="calcularOcupacao()">Calcular</button>
+
+          <script>
+                function calcularOcupacao() {
+                // Obtendo os valores dos inputs
+                const taxaEntrada = parseFloat(document.getElementById("entrada").value);
+                const taxaAtendimento = parseFloat(document.getElementById("atendimento").value);
+                // Verificando se todos os valores foram inseridos
+                if (isNaN(taxaEntrada) || isNaN(taxaAtendimento)) {
+                    document.getElementById("resultado").innerText = " = Not valid!";
+                    return;
+                }
+              
+                // Calculando a ocupação (taxa de atendimento / taxa de entrada)
+                const ocupacaoCalculada = ((taxaAtendimento / taxaEntrada) * 100).toFixed(2);
+              
+                // Exibindo o resultado na página
+                document.getElementById("resultado").innerText = ` = ${ocupacaoCalculada}%`;
+              }
+          </script>
+
+        </div>
+        {{ fig2|safe }}
+      </div>
+
+      <div class="plot">
+        <h3>2. Número máximo de elementos na fila</h3>
         <p>
           Este gráfico mostra o número máximo de elementos na fila durante a
           simulação. O número de elementos pode variar dependendo da taxa de
@@ -122,19 +136,8 @@
       </div>
 
       <div class="plot">
-        <h3>Utilização</h3>
-        <p>
-          A utilização mede a fração do tempo em que o sistema permanece
-          ocupado, em relação ao tempo total da simulação. Uma utilização
-          próxima a 1 indica que o sistema está constantemente ocupado, enquanto
-          uma utilização mais baixa sugere que há períodos ociosos.
-        </p>
-        {{ fig2|safe }}
-      </div>
-
-      <div class="plot">
         <h3>
-          Média de elementos no sistema (E[N]) & Tempo médio de espera (E[W])
+          3. Média de elementos no sistema (E[N]) & Tempo médio de espera (E[W])
         </h3>
         <p>
           A média de elementos no sistema reflete quantos itens, em média, estão
@@ -152,7 +155,7 @@
       </div>
 
       <div class="plot">
-        <h3>Taxa de chegada de elementos no sistema - Lambda (λ)</h3>
+        <h3>4. Taxa de chegada de elementos no sistema - Lambda (λ)</h3>
         <p>
           A taxa de chegada, ou Lambda (λ), representa o número de novos
           elementos que chegam ao sistema por unidade de tempo. Este valor é
@@ -163,7 +166,7 @@
       </div>
 
       <div class="plot">
-        <h3>Erro de Little</h3>
+        <h3>5. Erro de Little</h3>
         <p>
           O Erro de Little verifica a validade da fórmula de Little, que
           estabelece uma relação entre o número médio de itens no sistema, o

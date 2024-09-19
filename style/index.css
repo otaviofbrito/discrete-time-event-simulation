@@ -57,9 +57,68 @@ footer {
 
 div .calc {
   justify-content: center;
-  display: flex;
+  display: grid;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-div .input {
+div .left {
+  display: grid;
+  justify-items: end;
+}
+
+div .conta{
   display: flex;
+  align-items: center;
+  gap: 3rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid #ccc;
+}
+
+div .input
+{
+  display: flex;
+  align-items: center;
+}
+label {
+  font-size: 16px;
+  color: #555;
+}
+
+input[type="number"] {
+  width: 100%;
+  max-width: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;  
+  transition: border 0.3s ease;
+}
+
+input[type="number"]:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 0 0 8px 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  font-size: 18px;
+  color: #333;
 }
