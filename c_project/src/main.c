@@ -102,7 +102,11 @@ int main(int argc, char *argv[])
       en.num_eventos--;
       ew_saidas.num_eventos++;
     }
+<<<<<<< HEAD
     // Calcula métricas
+=======
+    // Calculate pontual little's metrics
+>>>>>>> 3a0960995a1d4e45cef767890ef336bb3d8d627d
     else
     {
 
