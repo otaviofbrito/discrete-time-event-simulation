@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   // metrics
   double en_final = 0.0;
   double ew_final = 0.0;
-  double lambda = 0.0;  
+  double lambda = 0.0;
   double little_error = 0.0;
   double ocupacao = 0.0;
 
@@ -102,11 +102,7 @@ int main(int argc, char *argv[])
       en.num_eventos--;
       ew_saidas.num_eventos++;
     }
-<<<<<<< HEAD
     // Calcula métricas
-=======
-    // Calculate pontual little's metrics
->>>>>>> 3a0960995a1d4e45cef767890ef336bb3d8d627d
     else
     {
 
