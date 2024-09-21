@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulação por Eventos Discretos</title>
-    <link rel="stylesheet" href="./style/index.css" />
+    <link rel="stylesheet" href="template/template.css" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script
@@ -12,6 +12,7 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
+    <script src="template/script.js"></script>
   </head>
   <body>
     <div class="container">
@@ -101,25 +102,6 @@
           </div>
 
           <button onclick="calcularOcupacao()">Calcular</button>
-
-          <script>
-                function calcularOcupacao() {
-                // Obtendo os valores dos inputs
-                const taxaEntrada = parseFloat(document.getElementById("entrada").value);
-                const taxaAtendimento = parseFloat(document.getElementById("atendimento").value);
-                // Verificando se todos os valores foram inseridos
-                if (isNaN(taxaEntrada) || isNaN(taxaAtendimento)) {
-                    document.getElementById("resultado").innerText = " = Not valid!";
-                    return;
-                }
-              
-                // Calculando a ocupação (taxa de atendimento / taxa de entrada)
-                const ocupacaoCalculada = ((taxaAtendimento / taxaEntrada) * 100).toFixed(2);
-              
-                // Exibindo o resultado na página
-                document.getElementById("resultado").innerText = ` = ${ocupacaoCalculada}%`;
-              }
-          </script>
 
         </div>
         {{ fig2|safe }}

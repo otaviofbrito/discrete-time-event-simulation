@@ -2,3 +2,5 @@ object/
 *.csv
 .env
 .vscode
+report.html
+__pycache__

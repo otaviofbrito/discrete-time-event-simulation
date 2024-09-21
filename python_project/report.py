@@ -1,12 +1,11 @@
 import plotly.express as px
 from jinja2 import Template
 import pandas as pd
-import plotly.graph_objects as go
 import os
 
-output_html_path = r"../index.html"
-input_template_path = r"./template.html"
-csv_path = r"../c_project/data/"
+output_html_path = r"report.html"
+input_template_path = r"template/template.html"
+csv_path = r"c_project/data/"
 
 
 def load_csv():
@@ -42,7 +41,7 @@ def render_to_html(figs):
             output_file.write(j2_template.render(plotly_jinja_data))
 
 
-def main():
+def generate_report():
     df = load_csv()
     figs = []
 
@@ -93,7 +92,3 @@ def main():
     render_to_html(figs)
 
     return
-
-
-if __name__ == '__main__':
-    main()

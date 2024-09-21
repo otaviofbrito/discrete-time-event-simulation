@@ -7,7 +7,7 @@
 #include "metrics.h"
 #include "little.h"
 
-#define CSV_PATH "./data/output.csv"
+#define CSV_PATH "c_project/data/output.csv"
 
 int main(int argc, char *argv[])
 {
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
   // Adicionar ocupacao ao nome do arquivo csv
   int file_ocup = (int)(round(ocupacao * 100));
   char new_name[50];
-  sprintf(new_name, "./data/output%d.csv", file_ocup);
+  sprintf(new_name, "c_project/data/output%d.csv", file_ocup);
 
   if (rename(CSV_PATH, new_name) != 0)
   {
