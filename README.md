@@ -1,14 +1,15 @@
 # Usage
 
-[Python 3](https://www.python.org/downloads/source/) is required
+[Python 3](https://www.python.org/downloads/source/) is required to run this project.
 
 ```shell
-python -m venv .env
-source .env/bin/activate
+#Build project
+make build
 
-pip install requirements.txt
+#Run project
+make
 
+#Clean
+make clean
 
-gcc simulacao.c -o -lm simulacao
-./simulacao
 ```
