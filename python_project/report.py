@@ -9,15 +9,17 @@ csv_path = r"c_project/data/"
 
 
 def load_csv():
+    i = 1
     arquivos_csv = [f for f in os.listdir(csv_path) if f.endswith('.csv')]
     dataframes = []
     for arquivo in arquivos_csv:
         caminho_arquivo = os.path.join(csv_path, arquivo)
         df = pd.read_csv(caminho_arquivo)
         if not df.empty:
-            number = arquivo.split('output')[-1].split('.')[0]
-            params = f"(E:{df.iloc[0]['Chegada']}, S:{df.iloc[0]['Saida']})"
-            df['Fonte'] = f'{number}% - {params}'
+            number = arquivo.split('output')[-1].split('.')[0][-2:]
+            params = f"(λ:{df.iloc[0]['Chegada']}, μ:{df.iloc[0]['Saida']})"
+            df['Fonte'] = f'{i}: {params} = {number}%'
+            i += 1
         dataframes.append(df)
 
     df_combined = pd.concat(dataframes, ignore_index=True)

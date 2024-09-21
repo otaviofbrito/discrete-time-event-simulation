@@ -143,7 +143,16 @@ int main(int argc, char *argv[])
   // Adicionar ocupacao ao nome do arquivo csv
   int file_ocup = (int)(round(ocupacao * 100));
   char new_name[50];
-  sprintf(new_name, "c_project/data/output%d.csv", file_ocup);
+
+  // Obter o tempo atual
+  time_t now = time(NULL);
+  struct tm *tm_info = localtime(&now);
+
+  // Formatar a data e hora
+  char time_str[20];
+  strftime(time_str, sizeof(time_str), "%Y%m%d_%H%M%S", tm_info);
+
+  sprintf(new_name, "c_project/data/output_%s_%d.csv", time_str ,file_ocup);
 
   if (rename(CSV_PATH, new_name) != 0)
   {
