@@ -40,15 +40,17 @@ def main():
                 seed = input(f"\nSeed aleatória[{i+1}]: ")
                 if not seed.isdigit():
                     raise ValueError("A seed deve ser um número inteiro.")
-                tx_chegada = float(input(f"Taxa média de chegada[{i+1}]: "))
+                tx_chegada = float(
+                    input(f"Informe o tempo médio entre as chegadas (s):[{i+1}]: "))
                 if tx_chegada < 0:
                     raise ValueError(
-                        "A taxa média de chegada deve ser não negativa.")
-                tx_saida = float(input(f"Taxa média de atendimento[{i+1}]: "))
+                        "O tempo médio entre as chegadas deve ser não negativo.")
+                tx_saida = float(
+                    input(f"Informe o tempo médio de atendimento (s): [{i+1}]: "))
                 if tx_saida < 0:
                     raise ValueError(
-                        "A taxa média de atendimento deve ser não negativa.")
-                tempo = int(input(f"Tempo de simulação[{i+1}]: "))
+                        "O tempo médio de atendimento deve ser não negativo.")
+                tempo = int(input(f"Tempo de simulação (s)[{i+1}]: "))
                 if tempo <= 0:
                     raise ValueError(
                         "O tempo de simulação deve ser maior que zero.")

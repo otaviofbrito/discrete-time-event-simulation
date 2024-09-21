@@ -17,7 +17,7 @@ def load_csv():
         df = pd.read_csv(caminho_arquivo)
         if not df.empty:
             number = arquivo.split('output')[-1].split('.')[0][-2:]
-            params = f"(λ:{df.iloc[0]['Chegada']}, μ:{df.iloc[0]['Saida']})"
+            params = f"(1/λ:{df.iloc[0]['Chegada']}, 1/μ:{df.iloc[0]['Saida']})"
             df['Fonte'] = f'{i}: {params} = {number}%'
             i += 1
         dataframes.append(df)
