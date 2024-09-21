@@ -4,7 +4,7 @@ function calcularOcupacao() {
   const taxaAtendimento = parseFloat(document.getElementById('util_mu').value)
   // Verificando se todos os valores foram inseridos
   if (isNaN(taxaEntrada) || isNaN(taxaAtendimento)) {
-    document.getElementById('util_res').innerText = ' = Not valid!'
+    document.getElementById('util_res').innerText = ' = Inválido!'
     return
   }
 
@@ -18,9 +18,21 @@ function calcularOcupacao() {
 function calcularL() {
   const rho = parseFloat(document.getElementById('e_rho').value)
   if (isNaN(rho)) {
-    document.getElementById('e_res').innerText = ' = Not valid!'
+    document.getElementById('e_res').innerText = ' = Inválido!'
     return
   }
   const e_n = (rho / (1 - rho)).toFixed(2)
   document.getElementById('e_res').innerText = ` = ${e_n}`
+}
+
+function calcularW() {
+  const mu = parseFloat(document.getElementById('e_mu').value)
+  const lambda = parseFloat(document.getElementById('e_lambda').value)
+
+  if (isNaN(mu) || isNaN(lambda)) {
+    document.getElementById('w_res').innerText = ' = Inválido!'
+    return
+  }
+  const e_w = (1 / (mu - lambda)).toFixed(2)
+  document.getElementById('w_res').innerText = ` = ${e_w}`
 }

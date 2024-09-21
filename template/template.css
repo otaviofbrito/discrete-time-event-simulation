@@ -126,3 +126,7 @@ p {
   font-size: 18px;
   color: #333;
 }
+
+div .left_params {
+  display: grid;
+}

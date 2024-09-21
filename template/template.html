@@ -163,41 +163,46 @@
         <p>$$W = E[W] = \frac{1}{\mu(1-\rho)} = \frac{1}{(\mu - \lambda)}$$</p>
         {{ fig3|safe }}
 
+        <h3>Valide E[N] e E[W]:</h3>
         <div class="validate">
-          <div class="calc">
-            <h3>Valide o E[N]:</h3>
-            <div class="conta">
-              <div class="input">
-                <label for="e_rho"> (ρ):</label>
-                <input
-                  type="number"
-                  id="e_rho"
-                  placeholder="ρ"
-                  min="0"
-                  step="0.1"
-                />
+          <div class="left_params">
+            <div class="input">
+              <label for="e_rho"> (ρ):</label>
+              <input
+                type="number"
+                id="e_rho"
+                placeholder="ρ"
+                min="0"
+                step="0.1"
+              />
+            </div>
 
-                <div class="input">
-                  <label for="e_rho"> (ρ):</label>
-                  <input
-                    type="number"
-                    id="e_rho"
-                    placeholder="ρ"
-                    min="0"
-                    step="0.1"
-                  />
-                </div>
+            <div class="input">
+              <label for="e_mu"> (μ):</label>
+              <input
+                type="number"
+                id="e_mu"
+                placeholder="μ"
+                min="0"
+                step="0.1"
+              />
+            </div>
 
-                <div class="input">
-                  <label for="e_rho"> (ρ):</label>
-                  <input
-                    type="number"
-                    id="e_rho"
-                    placeholder="ρ"
-                    min="0"
-                    step="0.1"
-                  />
+            <div class="input">
+              <label for="e_lambda"> (λ):</label>
+              <input
+                type="number"
+                id="e_lambda"
+                placeholder="λ"
+                min="0"
+                step="0.1"
+              />
                 </div>
+                </div>
+              </div>
+            </div>
+            <button onclick="calcularL()">Calcular</button>
+            </div>
               </div>
             </div>
             <button onclick="calcularL()">Calcular</button>
@@ -208,13 +213,15 @@
               <p>$$E[N] = \frac{\rho}{1-\rho}$$</p>
               <p id="e_res"></p>
             </div>
+            <button onclick="calcularL()">Calcular</button>
           </div>
 
           <div class="calc">
             <div class="conta">
               <p>$$E[W] = \frac{1}{(\mu - \lambda)}$$</p>
-              <p id="res_en"></p>
+              <p id="w_res"></p>
             </div>
+            <button onclick="calcularW()">Calcular</button>
           </div>
         </div>
       </div>
