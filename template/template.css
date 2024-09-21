@@ -58,8 +58,6 @@ footer {
 div .calc {
   justify-content: center;
   display: grid;
-  align-items: center;
-  margin-bottom: 2rem;
 }
 
 div .left {
@@ -70,11 +68,17 @@ div .left {
 div .conta{
   display: flex;
   align-items: center;
-  gap: 3rem;
+  gap: 1rem;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   border-radius: 8px 8px 0 0;
   border: 1px solid #ccc;
+}
+
+div .validate{
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
 }
 
 div .input
