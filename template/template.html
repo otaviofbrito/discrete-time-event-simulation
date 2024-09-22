@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Report</title>
-    <link rel="stylesheet" href="template.css" />
+    <link rel="stylesheet" href="/template/template.css" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script
@@ -12,7 +12,7 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
-    <script src="script.js"></script>
+    <script src="/template/script.js"></script>
   </head>
   <body>
     <div class="container">
@@ -186,8 +186,8 @@
             $$E[N] = (1 - \rho) \cdot \sum\limits_{n=0}^\infty n \cdot \rho^n $$
 
             <p>
-              Agora precisamos calcular a soma \( \sum_{n=0}^{\infty} n \cdot
-              \rho^n \).
+              Agora, precisamos calcular a soma \( \sum_{n=0}^{\infty} n \cdot
+              \rho^n \)
             </p>
             $$\sum\limits_{n=0}^\infty n \cdot \rho^n = \frac{\rho}{(1-\rho)^2}
             $$
@@ -198,21 +198,19 @@
             <p>Portanto,</p>
             <p class="tex_result">$$E[N] = \frac{\rho}{1-\rho} $$</p>
           </div>
-          <hr />
-          <div>
-            <p>Sabendo que:</p>
-            $$E[N] = \frac{\rho}{1-\rho}$$ $$\rho = \frac{\lambda}{\mu}$$
 
-            <p>Agora, podemos aplicar a Lei de Little para encontrar E[W]:</p>
+          <div>
+
+            <p>Assim, podemos aplicar a <b>Lei de Little</b> para encontrar <b>E[W]</b>:</p>
             $$ E[N] = \lambda \cdot E[W]$$
             <p>Substituindo E[N] pela fórmula encontrada:</p>
             $$\frac{\rho}{1-\rho} = \lambda \cdot E[W]$$
 
-            <p>Substituindo \(\rho = \frac{\lambda}{\mu}\)</p>
+            <p>Substituindo \(\rho = \frac{\lambda}{\mu}\):</p>
             $$\frac{\frac{\lambda}{\mu}}{1-\frac{\lambda}{\mu}} = \lambda \cdot
             E[W]$$ $$\frac{\lambda}{\mu - \lambda} = \lambda \cdot E[W]$$
 
-            <p>dividimos ambos os lados por λ</p>
+            <p>Dividimos ambos os lados por λ:</p>
             $$\frac{\cancel{\lambda}}{\cancel{\lambda}\cdot(\mu - \lambda)} =
             \frac{\cancel{\lambda} \cdot E[W]}{\cancel{\lambda}}$$
 
@@ -268,7 +266,7 @@
 
           <div class="calc">
             <div class="conta">
-              <p>$$E[W] = \frac{1}{(\mu - \lambda)}$$</p>
+              <p>$$E[W] = \frac{1}{\mu - \lambda}$$</p>
               <p id="w_res"></p>
             </div>
             <button onclick="calcularW()">Calcular</button>
@@ -314,7 +312,7 @@
           <ul>
             <li>\(\rho = \frac{\lambda}{\mu}\)</li>
             <li>\(E[N] = \frac{\rho}{1 -\rho}\)</li>
-            <li>\(E[W] = \frac{1}{\mu(1 - \rho)}\)</li>
+            <li>\(E[W] = \frac{1}{\mu - \lambda} = \frac{1}{\mu(1 - \rho)}\)</li>
           </ul>
 
           \[ \text{Erro de Little} = \left| E[N] - \lambda \cdot E[W] \right| \]
