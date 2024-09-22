@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Report</title>
-    <link rel="stylesheet" href="template/template.css" />
+    <link rel="stylesheet" href="template.css" />
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script
@@ -12,7 +12,7 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
-    <script src="template/script.js"></script>
+    <script src="script.js"></script>
   </head>
   <body>
     <div class="container">
@@ -164,8 +164,64 @@
         </p>
         {{ fig3|safe }}
 
-        <h3>Valide E[N] e E[W]:</h3>
-        <p>E[N] e E[W] podem ser calculados através das seguintes razões:</p>
+        <h3>Validação E[N] e E[W]:</h3>
+        <div class="tex">
+          <div>
+            <p>
+              A probabilidade de haver exatamente \(n\) clientes no sistema é
+              denotada por \(P_n\). Essa probabilidade segue uma distribuição
+              <b>geométrica</b> e pode ser expressa como:
+            </p>
+            $$ P_n = (1 - \rho) \cdot \rho^n$$
+
+            <p>
+              Para uma distribuição discreta, o valor esperado é dado pela soma
+              ponderada das probabilidades de cada estado:
+            </p>
+
+            $$E[N] = \sum\limits_{n=0}^\infty n \cdot P_n$$
+
+            <p>Substituímos \( P_n = (1 - \rho) \cdot \rho^n \) na equação:</p>
+            $$E[N] = \sum\limits_{n=0}^\infty n \cdot (1 - \rho) \cdot \rho^n $$
+            $$E[N] = (1 - \rho) \cdot \sum\limits_{n=0}^\infty n \cdot \rho^n $$
+
+            <p>
+              Agora precisamos calcular a soma \( \sum_{n=0}^{\infty} n \cdot
+              \rho^n \).
+            </p>
+            $$\sum\limits_{n=0}^\infty n \cdot \rho^n = \frac{\rho}{(1-\rho)^2}
+            $$
+
+            <p>Substituindo o resultado encontrado:</p>
+            $$E[N] = (1 - \rho) \cdot \frac{\rho}{(1-\rho)^2} $$
+
+            <p>Portanto,</p>
+            <p class="tex_result">$$E[N] = \frac{\rho}{1-\rho} $$</p>
+          </div>
+          <hr />
+          <div>
+            <p>Sabendo que:</p>
+            $$E[N] = \frac{\rho}{1-\rho}$$ $$\rho = \frac{\lambda}{\mu}$$
+
+            <p>Agora, podemos aplicar a Lei de Little para encontrar E[W]:</p>
+            $$ E[N] = \lambda \cdot E[W]$$
+            <p>Substituindo E[N] pela fórmula encontrada:</p>
+            $$\frac{\rho}{1-\rho} = \lambda \cdot E[W]$$
+
+            <p>Substituindo \(\rho = \frac{\lambda}{\mu}\)</p>
+            $$\frac{\frac{\lambda}{\mu}}{1-\frac{\lambda}{\mu}} = \lambda \cdot
+            E[W]$$ $$\frac{\lambda}{\mu - \lambda} = \lambda \cdot E[W]$$
+
+            <p>dividimos ambos os lados por λ</p>
+            $$\frac{\cancel{\lambda}}{\cancel{\lambda}\cdot(\mu - \lambda)} =
+            \frac{\cancel{\lambda} \cdot E[W]}{\cancel{\lambda}}$$
+
+            <p>Portanto, o tempo médio de espera no sistema é definido por:</p>
+            <p class="tex_result">$$E[W] = \frac{1}{\mu - \lambda}$$</p>
+          </div>
+        </div>
+
+        <p>Calcule E[N] e E[W] através das fórmulas: </p>
         <div class="validate">
           <div class="left_params">
             <div class="input">
@@ -254,7 +310,7 @@
 
         <h3>Validação do Erro de Little:</h3>
         <div>
-          Temos que:
+          <p>Temos que:</p>
           <ul>
             <li>\(\rho = \frac{\lambda}{\mu}\)</li>
             <li>\(E[N] = \frac{\rho}{1 -\rho}\)</li>
@@ -262,16 +318,21 @@
           </ul>
 
           \[ \text{Erro de Little} = \left| E[N] - \lambda \cdot E[W] \right| \]
-          Substituindo \( E[N] \) e \( E[W] \): \[ \text{Erro de Little} =
-          \left| \frac{\rho}{1 - \rho} - \lambda \cdot \frac{1}{\mu(1 - \rho)}
-          \right| \] \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} -
-          \frac{\lambda}{\mu(1 - \rho)} \right| \] Como \(\rho =
-          \frac{\lambda}{\mu}\), substituímos \( \lambda = \rho \cdot \mu \)
-          para simplificar: \[ \text{Erro de Little} = \left| \frac{\rho}{1 -
-          \rho} - \frac{\rho \cdot \cancel{\mu}}{\cancel{\mu}(1 - \rho)} \right|
-          \] \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} -
-          \frac{\rho}{1 - \rho} \right| \] Portanto, \[ \text{Erro de Little} =
-          0 \]
+          <p>Substituindo \( E[N] \) e \( E[W] \):</p>
+          \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} - \lambda
+          \cdot \frac{1}{\mu(1 - \rho)} \right| \] \[ \text{Erro de Little} =
+          \left| \frac{\rho}{1 - \rho} - \frac{\lambda}{\mu(1 - \rho)} \right|
+          \]
+          <p>
+            Como \(\rho = \frac{\lambda}{\mu}\), substituímos \( \lambda = \rho
+            \cdot \mu \) para simplificar:
+          </p>
+          \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} - \frac{\rho
+          \cdot \cancel{\mu}}{\cancel{\mu}(1 - \rho)} \right| \] 
+          \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} - \frac{\rho}{1 - \rho}
+          \right| \]
+          <p>Portanto,</p>
+          <p class="tex_result">\[ \text{Erro de Little} =0\]</p>
         </div>
       </div>
       <hr class="stylized-line" />
