@@ -23,10 +23,24 @@ After the build process, you can run the project:
 make
 ```
 
-Once executed, a report will automatically open, displaying the graphical visualizations.
+Once executed, a report will automatically open, displaying the graphical visualizations:
 
 ```shell
 # Clean objects, reports and generated data
 make clean
 ```
+
+You can also run it with predefined inputs in the inputs.txt file:
+```shell
+# Express run with inputs.txt
+make auto
+```
+
+To fully clean the environment, run:
+```shell
+# Remove generated data, objects and virtual environment
+make purge
+```
+
+
 ---
