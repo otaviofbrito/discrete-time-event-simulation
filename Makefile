@@ -20,10 +20,9 @@ clean:
 build:
 	@echo "Criando ambiente virtual..."
 	python3 -m venv .env
-	@echo "Ativando ambiente virtual..."
-	. .env/bin/activate && \
-	echo "Instalando dependências do requirements.txt..." && \
-	pip install -r requirements.txt && \
-	echo "Criando arquivo .env..." && \
-	echo ".env criado com sucesso!"
+	@echo "Instalando dependências no ambiente virtual ..."
+	. .env/bin/activate; pip install -r requirements.txt; deactivate
+	@echo "Ative o ambiente virtual com o comando: source .env/bin/activate"
+	@echo "Em seguida execute o comando: make"
+
 
