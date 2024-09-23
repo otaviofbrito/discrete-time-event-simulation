@@ -74,10 +74,10 @@ def generate_report():
     )
     figs.append(fig)
 
-    fig = px.line(df, x='Time', y="Lambda", color='Fonte')
+    fig = px.line(df, x='Time', y=["Lambda", "Mu"], color='Fonte')
     fig.update_layout(
         xaxis_title='Tempo',
-        yaxis_title='Lambda',
+        yaxis_title='Taxas',
         legend_title='Parâmetros'
     )
     figs.append(fig)
