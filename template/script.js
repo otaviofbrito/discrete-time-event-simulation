@@ -9,7 +9,7 @@ function calcularOcupacao() {
   }
 
   // Calculando a ocupação (taxa de atendimento / taxa de entrada)
-  const ocupacaoCalculada = ((taxaAtendimento / taxaEntrada) * 100).toFixed(2)
+  const ocupacaoCalculada = ((taxaEntrada / taxaAtendimento) * 100).toFixed(2)
 
   // Exibindo o resultado na página
   document.getElementById('util_res').innerText = ` = ${ocupacaoCalculada}%`
@@ -21,7 +21,7 @@ function calcularL() {
     document.getElementById('e_res').innerText = ' = Inválido!'
     return
   }
-  const e_n = (rho / (1 - rho)).toFixed(2)
+  const e_n = (rho / (1 - rho)).toFixed(3)
   document.getElementById('e_res').innerText = ` = ${e_n}`
 }
 
@@ -33,6 +33,6 @@ function calcularW() {
     document.getElementById('w_res').innerText = ' = Inválido!'
     return
   }
-  const e_w = (1 / (mu - lambda)).toFixed(2)
+  const e_w = (1 / (mu - lambda)).toFixed(3)
   document.getElementById('w_res').innerText = ` = ${e_w}`
 }
