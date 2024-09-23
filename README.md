@@ -14,9 +14,6 @@ At the root directory, run the following commands:
 ```shell
 # Build project and install dependencies
 make build
-
-# Next, activate the python environment
-source .env/bin/activate
 ```
 
 After the build process, you can run the project:
