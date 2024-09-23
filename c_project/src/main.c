@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
   double en_final = 0.0;
   double ew_final = 0.0;
   double lambda = 0.0;
+  double mu = 0.0;
   double little_error = 0.0;
   double ocupacao = 0.0;
 
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
     printf("Error opening file!\n");
     return EXIT_FAILURE;
   }
-  fprintf(file, "Time,Fila Max,Ocupacao,E[N],E[W],Lambda,Erro de Little,Chegada,Saida\n");
+  fprintf(file, "Time,Fila Max,Ocupacao,E[N],E[W],Lambda,Mu,Erro de Little,Chegada,Saida\n");
 
   while (tempo_decorrido <= tempo_simulacao)
   {
@@ -105,7 +106,7 @@ int main(int argc, char *argv[])
     // Calcula métricas
     else
     {
-      //atualiza os 3 gráficos
+      // atualiza os 3 gráficos
       littles_calc(&en, tempo_decorrido);
       littles_calc(&ew_chegadas, tempo_decorrido);
       littles_calc(&ew_saidas, tempo_decorrido);
@@ -113,12 +114,13 @@ int main(int argc, char *argv[])
       en_final = en.soma_areas / tempo_decorrido;
       ew_final = (ew_chegadas.soma_areas - ew_saidas.soma_areas) / ew_chegadas.num_eventos;
       lambda = ew_chegadas.num_eventos / tempo_decorrido;
+      mu = (1 / ew_final) + lambda;
       ocupacao = soma_ocupacao / tempo_decorrido;
-      little_error = en_final - (lambda * ew_final);
+      little_error = abs(en_final - (lambda * ew_final));
 
       // Escrever no arquivo CSV
-      fprintf(file, "%f,%lu,%f,%f,%f,%f,%f,%f,%f\n",
-              tempo_decorrido, fila_max, ocupacao, en_final, ew_final, lambda, little_error, param1, param2);
+      fprintf(file, "%f,%lu,%f,%f,%f,%f,%f,%f,%f,%f\n",
+              tempo_decorrido, fila_max, ocupacao, en_final, ew_final, lambda, mu, little_error, param1, param2);
 
       // Atualizar o próximo tempo para calcular métricas
       tempo_calc += 100.0;
@@ -131,14 +133,17 @@ int main(int argc, char *argv[])
   en_final = en.soma_areas / tempo_decorrido;
   ew_final = (ew_chegadas.soma_areas - ew_saidas.soma_areas) / ew_chegadas.num_eventos;
   lambda = ew_chegadas.num_eventos / tempo_decorrido;
+  mu = (1 / ew_final) + lambda;
   ocupacao = soma_ocupacao / tempo_decorrido;
-  little_error = en_final - (lambda * ew_final);
+  little_error = abs(en_final - (lambda * ew_final));
 
   printf("\nMaior tamanho de fila alcancado: %ld\n", fila_max);
   printf("Ocupacao: %lf\n", ocupacao);
   printf("E[N]: %lf\n", en_final);
   printf("E[W]: %lf\n", ew_final);
   printf("Erro de Little: %lf\n", little_error);
+  printf("Lambda: %lf\n", lambda);
+  printf("Mu: %lf\n", mu);
 
   // Adicionar ocupacao e data ao nome do arquivo csv para identificação
   int file_ocup = (int)(round(ocupacao * 100));
@@ -152,7 +157,7 @@ int main(int argc, char *argv[])
   char time_str[20];
   strftime(time_str, sizeof(time_str), "%Y%m%d_%H%M%S", tm_info);
 
-  sprintf(new_name, "c_project/data/output_%s_%d.csv", time_str ,file_ocup);
+  sprintf(new_name, "c_project/data/output_%s_%d.csv", time_str, file_ocup);
 
   if (rename(CSV_PATH, new_name) != 0)
   {
