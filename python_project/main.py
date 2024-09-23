@@ -1,7 +1,7 @@
 import subprocess
 import webbrowser
 import os
-from report import *
+from gen_report import *
 
 report_path = 'report.html'
 
