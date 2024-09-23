@@ -3,7 +3,7 @@ from jinja2 import Template
 import pandas as pd
 import os
 
-output_html_path = r"report.html"
+output_html_path = r"report/report.html"
 input_template_path = r"template/template.html"
 csv_path = r"c_project/data/"
 
