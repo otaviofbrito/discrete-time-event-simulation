@@ -10,6 +10,7 @@ These tools are often pre-installed on your OS. If not, visit their websites and
 ### Usage
 The project can be easily built using a Makefile.
 
+At the root directory, run the following commands:
 ```shell
 # Build project and install dependencies
 make build
