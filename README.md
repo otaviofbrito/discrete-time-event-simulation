@@ -1,5 +1,10 @@
 # Discrete Time Event Simulation
 
+![GitHub Actions](https://github.com/otaviofbrito/discrete-time-event-simulation/actions/workflows/makefile.yml/badge.svg)
+
+:chart_with_upwards_trend: A example report is available on [Github Pages](https://otaviofbrito.github.io/discrete-time-event-simulation/).
+
+
 ### Pre-Requisites
 These tools are often pre-installed on your OS. If not, visit their websites and install them:
 - [Python 3](https://www.python.org/downloads/source/)
