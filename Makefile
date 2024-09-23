@@ -3,6 +3,12 @@
 # Alvo principal que chama os dois alvos
 all: env c_project python_script
 
+#Comando de para executar com as entradas do aqruivo input.txt
+auto: env c_project python_input
+
+#Remova os arquivos gerados e o ambiente virtual
+purge: clean remove_env
+
 env: 
 	@if [ ! -d ".env" ]; then \
 		echo "[WARNING]: O ambiente virtual não foi criado. Execute 'make build' primeiro!"; \
@@ -17,6 +23,9 @@ c_project:
 python_script:
 	. .env/bin/activate; python3 python_project/main.py; deactivate
 
+#Auto run with inputs.txt
+python_input:
+	. .env/bin/activate; python3 python_project/main.py < input.txt; deactivate
 
 # Alvo para executar o clean do Makefile dentro de c_project
 clean:
@@ -32,3 +41,8 @@ build:
 	. .env/bin/activate; pip install -r requirements.txt; deactivate
 	@echo "[OK]: Ambiente virtual criado!"
 
+# Remover ambiente virtual
+remove_env:
+	@echo "[INFO]: Excluindo ambiente virtual..."
+	rm -rf .env
+	@echo "[OK]: Ambiente virtual removido!"
