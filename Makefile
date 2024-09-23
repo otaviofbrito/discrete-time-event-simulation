@@ -30,7 +30,7 @@ python_input:
 # Alvo para executar o clean do Makefile dentro de c_project
 clean:
 	$(MAKE) -C c_project clean
-	@if [ -f report.html ]; then rm report.html; fi
+	@if [ -f report/report.html ]; then rm report/report.html; fi
 	@echo "[OK]: Ambiente limpo!"
 
 # Alvo para configurar o ambiente Python
