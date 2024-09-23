@@ -19,4 +19,4 @@ main: $(OBJ)
 
 clean:
 	rm -rf $(OBJ_DIR) main
-	rm -rf ./data/*
+	rm -rf ./data/*.csv
