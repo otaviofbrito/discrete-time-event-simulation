@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
   little ew_chegadas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
   little ew_saidas = {.num_eventos = 0, .soma_areas = 0.0, .tempo_anterior = 0.0};
 
-  // metrics
+  // metricas
   double en_final = 0.0;
   double ew_final = 0.0;
   double lambda = 0.0;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     // Calcula métricas
     else
     {
-
+      //atualiza os 3 gráficos
       littles_calc(&en, tempo_decorrido);
       littles_calc(&ew_chegadas, tempo_decorrido);
       littles_calc(&ew_saidas, tempo_decorrido);
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
   printf("E[W]: %lf\n", ew_final);
   printf("Erro de Little: %lf\n", little_error);
 
-  // Adicionar ocupacao ao nome do arquivo csv
+  // Adicionar ocupacao e data ao nome do arquivo csv para identificação
   int file_ocup = (int)(round(ocupacao * 100));
   char new_name[50];
 

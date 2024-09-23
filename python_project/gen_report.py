@@ -7,7 +7,7 @@ output_html_path = r"report.html"
 input_template_path = r"template/template.html"
 csv_path = r"c_project/data/"
 
-
+#Carrega os arquivos csv gerados no projeto c como um pandas dataframe
 def load_csv():
     i = 1
     arquivos_csv = [f for f in os.listdir(csv_path) if f.endswith('.csv')]
@@ -25,7 +25,7 @@ def load_csv():
     df_combined = pd.concat(dataframes, ignore_index=True)
     return df_combined
 
-
+#Injeta os plots dentro do template HTML
 def render_to_html(figs):
     # Convert figures to HTML
     plotly_jinja_data = {
@@ -42,7 +42,7 @@ def render_to_html(figs):
             j2_template = Template(template_file.read())
             output_file.write(j2_template.render(plotly_jinja_data))
 
-
+#Cria as visualizações gráficas com o plotly e no final injeta no HTML
 def generate_report():
     df = load_csv()
     figs = []

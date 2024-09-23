@@ -4,6 +4,7 @@
 #include <time.h>
 #include <float.h>
 
+//gera um numero aleatorio distribuido uniformemente entre 0 e 1
 double uniforme()
 {
   double u = rand() / ((double)RAND_MAX + 1);
@@ -13,6 +14,7 @@ double uniforme()
   return u;
 }
 
+//gera o tempo por meio de uma distribuicao exponencial
 double gera_tempo(double l)
 {
   return (-1.0 / l) * log(uniforme());

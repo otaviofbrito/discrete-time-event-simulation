@@ -5,12 +5,12 @@ from gen_report import *
 
 report_path = 'report.html'
 
-
+#Executa o projeto c com os parametros passados como entrada
 def run_simulation(seed, l, m, sim_time):
     cmd = f'c_project/main {seed} {l} {m} {sim_time}'
     subprocess.run(cmd, shell=True)
 
-
+#Abre automaticamente o arquivo html gerado no navegador
 def open_report():
     if os.path.exists(report_path):
         webbrowser.open(f'{report_path}')
