@@ -177,3 +177,9 @@ a {
 ul li{
   margin: 1rem;
 }
+
+div.rate {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}

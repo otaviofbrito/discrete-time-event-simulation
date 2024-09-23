@@ -305,17 +305,21 @@
       <hr class="stylized-line" />
       <div class="section">
         <h3>
-          4. Taxa de chegada de elementos no sistema - Lambda
-          \(\left(\lambda\right)\)
+          4. Taxa de chegada de elementos no sistema \(\left(\lambda\right)\) &
+          Taxa de atendimento \(\left(\mu\right)\)
         </h3>
         <p>
           A taxa de chegada, ou \(\lambda\), representa o número de novos
           elementos que chegam ao sistema por unidade de tempo, é representada
-          pelo inverso do tempo médio entre as chegadas. Este valor é
-          fundamental para calcular outras métricas, como a utilização e o
-          número de elementos no sistema.
+          pelo inverso do tempo médio entre as chegadas. Já a taxa de
+          atendimento (denotada como \(\mu\) ) refere-se à média de clientes que
+          um servidor (ou sistema de atendimento) consegue processar ou atender
+          em uma unidade de tempo.
         </p>
-        <p>$$\lambda = \frac{1}{\text{Tempo médio entre as chegadas}}$$</p>
+        <div class="rate">
+          <p>$$\lambda = \frac{1}{\text{Tempo médio entre as chegadas}}$$</p>
+          <p>$$\mu = \frac{1}{\text{Tempo médio de atendimento}}$$</p>
+        </div>
 
         {{ fig4|safe }}
       </div>
