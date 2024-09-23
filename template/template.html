@@ -20,7 +20,8 @@
         <h1>Simulação via Eventos Discretos</h1>
         <p class="subtitle">Discrete Time Event Simulation</p>
       </header>
-      <article>
+      <div class="section">
+        <h2>Fila M/M/1</h2>
         <p>
           Os elementos chave em uma simulação por eventos discretos são
           variáveis e eventos. Para executar a simulação, é necessário manter o
@@ -42,28 +43,47 @@
           </li>
         </ul>
         <p>
-          Durante a simulação, os eventos ocorrem em pontos específicos no
-          tempo, e cada evento pode alterar o estado do sistema ou influenciar
-          outras variáveis. O objetivo de uma simulação de eventos discretos é
-          coletar informações e métricas do sistema, como tempo médio de espera,
-          utilização do sistema, número médio de elementos no sistema, entre
-          outros.
+          Considere um serviço de atendimento, onde os clientes chegam para
+          serem atendidos. Se houver fila, eles esperam sua vez até que o
+          servidor (o atendente) esteja disponível. O sistema funciona sob uma
+          política <b>FIFO</b> (<i>First In, First Out</i>), ou seja, o primeiro
+          cliente a chegar é o primeiro a ser atendido. Apenas um cliente pode
+          ser atendido por vez, e os outros aguardam.
         </p>
         <p>
-          Em modelos de fila <b>M/M/1</b> em que há apenas um servidor,
-          consideramos que os clientes chegam de acordo com um processo de
-          <b>Poisson</b> e os tempos de serviço têm uma distribuição
-          <b>exponencial</b>. Na simulação desse modelo, utilizamos a seguinte
-          função para a geração dos tempos:
+          É o sistema de filas mais simples, onde existe um único servidor, já
+          que apenas um cliente pode ser atendido por vez. Em modelos de fila
+          <b>M/M/1</b> em que há apenas um servidor, consideramos que os
+          clientes chegam de acordo com um processo de <b>Poisson</b> e os
+          tempos de serviço têm uma distribuição <b>exponencial</b>. Na
+          simulação desse modelo, utilizamos a seguinte função para a geração
+          dos tempos:
         </p>
         <p>$$T = \frac{-1}{\lambda} \cdot ln(U)$$</p>
         <p>
           onde <i><b>U</b></i> é um número aleatório gerado uniformemente no
           intervalo (0,1).
         </p>
-      </article>
+        <h2>Lei de Little</h2>
+        <p>
+          Um dos fundamentos da teoria de filas é a
+          <a href="https://en.wikipedia.org/wiki/Little%27s_law" target="_blank"
+            >Lei de Little</a
+          >, dada pela fórmula: \[ E[N] = \lambda \cdot E[W] \] Essa fórmula se
+          aplica a qualquer sistema em equilíbrio, onde os clientes chegam,
+          passam certo tempo, são atendidos e partem.
+        </p>
+        <ul>
+          <li>
+            \(\lambda\): a taxa de chegada, por exemplo, (clientes/unidade de
+            tempo).
+          </li>
+          <li>\(E[N]\): número médio de elementos dentro do sistema.</li>
+          <li>\(E[W]\): tempo médio que cada elemento permanece no sistema.</li>
+        </ul>
+      </div>
       <hr class="stylized-line" />
-      <div>
+      <div class="section">
         <h2>Medidas de Desempenho</h2>
         <p>
           O modelo é considerado estável somente se \(\lambda < \mu\). Se, em
@@ -71,9 +91,11 @@
           serviços, a fila se tornará indefinidamente longa.
         </p>
 
-        A seguir foram calculadas medidas de desempenho com base em cada
-        simulação realizada, cada gráfico conta com uma legenda onde estão
-        classificadas as simulações e seus respectivos parâmetros de execução:
+        <p>
+          A seguir foram calculadas medidas de desempenho com base em cada
+          simulação realizada, cada gráfico conta com uma legenda onde estão
+          classificadas as simulações e seus respectivos parâmetros de execução:
+        </p>
         <ul>
           <li>
             <b
@@ -83,14 +105,20 @@
           </li>
         </ul>
 
-        $$\text{Tempo médio entre as chegadas} = \frac{1}{\lambda} $$
-        $$\text{Tempo médio de atendimento} = \frac{1}{\mu} $$ Em algumas
-        medidas, existem campos que podem ser utilzados para validar o
-        desempenho do sistema.
+        Em algumas medidas, existem campos que podem ser utilzados para validar
+        o desempenho do sistema.
       </div>
-
-      <div class="plot">
-        <h3>1. Utilização/Ocupação (ρ)</h3>
+      <hr class="stylized-line" />
+      <div class="section">
+        <h3>1. Utilização/Ocupação (\(\rho\))</h3>
+        <p>
+          Sabendo que, a cada \(1/\lambda\) unidades de tempo um novo cliente
+          chega, e a cada \(1/\mu\) unidades de tempo um atendimento é
+          finalizado, temos que:
+        </p>
+        $$\text{Tempo médio entre as chegadas} = \frac{1}{\lambda} $$
+        $$\text{Tempo médio de atendimento} = \frac{1}{\mu} $$
+        <p>Com isso, a intensidade do tráfego pode ser reescrita como:</p>
         <p>
           A utilização ou ocupação do sistema mede a proporção média do tempo em
           que o servidor fica ocupado em relação ao tempo total de operação, é
@@ -104,7 +132,7 @@
         <div class="calc">
           <h3>Valide a utilização:</h3>
           <div class="conta">
-            ρ =
+            \(\rho\) =
             <div class="left">
               <div class="input">
                 <label for="util_lambda">Taxa de chegada (λ):</label>
@@ -140,8 +168,7 @@
         </div>
       </div>
       <hr class="stylized-line" />
-
-      <div class="plot">
+      <div class="section">
         <h3>2. Número máximo de elementos na fila</h3>
         <p>
           Este gráfico mostra o número máximo de elementos na fila durante a
@@ -151,26 +178,26 @@
         {{ fig1|safe }}
       </div>
       <hr class="stylized-line" />
-
-      <div class="plot">
+      <div class="section">
         <h3>
-          3. Média de elementos no sistema (E[N]) & Tempo médio de espera (E[W])
+          3. Média de elementos no sistema (\(E[N]\)) & Tempo médio de espera
+          (\(E[W]\))
         </h3>
         <p>
           A média de elementos no sistema reflete quantos itens, em média, estão
           presentes no sistema a qualquer instante de tempo. Já o tempo médio de
-          espera representa o tempo que um elemento passa na fila antes de ser
-          processado.
+          espera representa o tempo que um elemento permanece no sistema.
         </p>
         {{ fig3|safe }}
 
-        <h3>Validação E[N] e E[W]:</h3>
+        <h3>Validação \(E[N]\) e \(E[W]\):</h3>
         <div class="tex">
           <div>
             <p>
-              A probabilidade de haver exatamente \(n\) clientes no sistema é
-              denotada por \(P_n\). Essa probabilidade segue uma distribuição
-              <b>geométrica</b> e pode ser expressa como:
+              Em um modelo estável, isto é, \(\rho < 1\), a probabilidade de
+              haver exatamente \(n\) clientes no sistema é denotada por \(P_n\).
+              Essa probabilidade segue uma
+              <b>distribuição geométrica</b> e pode ser expressa como:
             </p>
             $$ P_n = (1 - \rho) \cdot \rho^n$$
 
@@ -187,30 +214,33 @@
 
             <p>
               Agora, precisamos calcular a soma \( \sum_{n=0}^{\infty} n \cdot
-              \rho^n \)
+              \rho^n \):
             </p>
             $$\sum\limits_{n=0}^\infty n \cdot \rho^n = \frac{\rho}{(1-\rho)^2}
             $$
 
             <p>Substituindo o resultado encontrado:</p>
-            $$E[N] = (1 - \rho) \cdot \frac{\rho}{(1-\rho)^2} $$
+            $$E[N] = \cancel{(1 - \rho)} \cdot \frac{\rho}{\cancel{(1-\rho)^2}}
+            $$
 
             <p>Portanto,</p>
             <p class="tex_result">$$E[N] = \frac{\rho}{1-\rho} $$</p>
           </div>
 
           <div>
-
-            <p>Assim, podemos aplicar a <b>Lei de Little</b> para encontrar <b>E[W]</b>:</p>
+            <p>
+              Assim, podemos aplicar a <b>Lei de Little</b> para encontrar
+              \(E[W]\):
+            </p>
             $$ E[N] = \lambda \cdot E[W]$$
-            <p>Substituindo E[N] pela fórmula encontrada:</p>
+            <p>Substituindo \(E[N]\) pela fórmula encontrada:</p>
             $$\frac{\rho}{1-\rho} = \lambda \cdot E[W]$$
 
             <p>Substituindo \(\rho = \frac{\lambda}{\mu}\):</p>
             $$\frac{\frac{\lambda}{\mu}}{1-\frac{\lambda}{\mu}} = \lambda \cdot
             E[W]$$ $$\frac{\lambda}{\mu - \lambda} = \lambda \cdot E[W]$$
 
-            <p>Dividimos ambos os lados por λ:</p>
+            <p>Dividimos ambos os lados por \(\lambda\):</p>
             $$\frac{\cancel{\lambda}}{\cancel{\lambda}\cdot(\mu - \lambda)} =
             \frac{\cancel{\lambda} \cdot E[W]}{\cancel{\lambda}}$$
 
@@ -219,7 +249,7 @@
           </div>
         </div>
 
-        <p>Calcule E[N] e E[W] através das fórmulas: </p>
+        <p>Calcule \(E[N]\) e \(E[W]\) através das fórmulas:</p>
         <div class="validate">
           <div class="left_params">
             <div class="input">
@@ -273,13 +303,14 @@
           </div>
         </div>
       </div>
-
       <hr class="stylized-line" />
-
-      <div class="plot">
-        <h3>4. Taxa de chegada de elementos no sistema - Lambda (λ)</h3>
+      <div class="section">
+        <h3>
+          4. Taxa de chegada de elementos no sistema - Lambda
+          \(\left(\lambda\right)\)
+        </h3>
         <p>
-          A taxa de chegada, ou <b>Lambda (λ)</b>, representa o número de novos
+          A taxa de chegada, ou \(\lambda\), representa o número de novos
           elementos que chegam ao sistema por unidade de tempo, é representada
           pelo inverso do tempo médio entre as chegadas. Este valor é
           fundamental para calcular outras métricas, como a utilização e o
@@ -290,15 +321,14 @@
         {{ fig4|safe }}
       </div>
       <hr class="stylized-line" />
-
-      <div class="plot">
+      <div class="section">
         <h3>5. Erro de Little</h3>
         <p>
           O Erro de Little verifica a validade da fórmula de Little, que
-          estabelece uma relação entre o número médio de itens no sistema, o
-          tempo médio de espera e a taxa de chegada de itens. Um erro muito alto
-          pode indicar inconsistências na simulação. Para garantir consistência,
-          o erro de Little deve ser próximo de 0.
+          estabelece uma relação entre o número médio de clientes no sistema, o
+          tempo médio de espera e a taxa de chegada de clientes. Um erro muito
+          alto pode indicar inconsistências na simulação. Para garantir
+          consistência, o erro de Little deve ser próximo de 0.
         </p>
         <p>Lei de Little: $$E[N] = \lambda \cdot E[W]$$</p>
         <p>
@@ -312,7 +342,9 @@
           <ul>
             <li>\(\rho = \frac{\lambda}{\mu}\)</li>
             <li>\(E[N] = \frac{\rho}{1 -\rho}\)</li>
-            <li>\(E[W] = \frac{1}{\mu - \lambda} = \frac{1}{\mu(1 - \rho)}\)</li>
+            <li>
+              \(E[W] = \frac{1}{\mu - \lambda} = \frac{1}{\mu(1 - \rho)}\)
+            </li>
           </ul>
 
           \[ \text{Erro de Little} = \left| E[N] - \lambda \cdot E[W] \right| \]
@@ -327,14 +359,14 @@
           </p>
           \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} - \frac{\rho
           \cdot \cancel{\mu}}{\cancel{\mu}(1 - \rho)} \right| \] 
-          \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} - \frac{\rho}{1 - \rho}
-          \right| \]
+          \[ \text{Erro de Little} = \left| \frac{\rho}{1 - \rho} -
+          \frac{\rho}{1-\rho}\right|\]
           <p>Portanto,</p>
           <p class="tex_result">\[ \text{Erro de Little} =0\]</p>
         </div>
       </div>
       <hr class="stylized-line" />
-      <div>
+      <div class="section">
         <h3>Referências</h3>
         <ol>
           <li>
