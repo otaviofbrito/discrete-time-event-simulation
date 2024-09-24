@@ -2,7 +2,7 @@
 
 ![GitHub Actions](https://github.com/otaviofbrito/discrete-time-event-simulation/actions/workflows/makefile.yml/badge.svg)
 
-:chart_with_upwards_trend: A example report is available on [Github Pages](https://otaviofbrito.github.io/discrete-time-event-simulation/).
+:chart_with_upwards_trend: An example report is available on [Github Pages](https://otaviofbrito.github.io/discrete-time-event-simulation/report.html).
 
 
 ### Pre-Requisites
@@ -46,6 +46,3 @@ To fully clean the environment, run:
 # Remove generated data, objects and virtual environment
 make purge
 ```
-
-
----
